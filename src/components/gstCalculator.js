@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import APP_CONSTANTS from '../constants/appConstants';
+import { Commodity } from '../classes/commodity';
+import { Food } from '../classes/food';
+import { Electronics } from '../classes/electronics';
+import { Furniture } from '../classes/furniture';
+import { Cosmetics } from '../classes/cosmetics';
+import CLASS_CONSTANTS from '../constants/classConstants';
 
 class GstCalculator extends Component {
   constructor(props) {
@@ -23,35 +28,36 @@ class GstCalculator extends Component {
 
   getAmount(event) {
     event.preventDefault();
-    let newCalculation = {
-      commodity: this.commodity.current.value.toUpperCase(),
-      unit: this.unit.current.value,
-      unitPrice: this.unitPrice.current.value,
-      gstPercentage: 0,
-      gstAmount: 0,
-      amount: 0,
-      category: ''
-    }
-    if(this.unit.current.value < 0 || this.unitPrice.current.value < 0) {
-      alert(`No! Please don't enter negative values`);
+    let commodity = this.commodity.current.value.toUpperCase();
+    let unit = this.unit.current.value;
+    let unitPrice = this.unitPrice.current.value;
+    let item;
+    if(unit < 0 || unitPrice < 0) {
+      return alert(`No! Please don't enter negative values in Unit or Unit Price`);
     } else {
-      APP_CONSTANTS.GST_CAL.forEach(record => {
-        if(record.COMMODITY.includes(newCalculation.commodity)) {
-          newCalculation.gstPercentage = record.GST_PERCENTAGE;
-          newCalculation.category = record.CATEGORY;
-        }
-      });
-      if(newCalculation.category) {
-        newCalculation.gstAmount = this.getGstAmount(newCalculation);
-        newCalculation.amount = this.calculateAmount(newCalculation);
-        this.setState({
-          currentCalculation: newCalculation
-        });
-        this.props.addToCalculations(newCalculation);
-      } else {
-        alert(`404: Commodity not found, Please ask your admin to add ${newCalculation.commodity.toLowerCase()} in the list.`);
+      switch (true) {
+        case CLASS_CONSTANTS.GST_CAL.FOOD.COMMODITY.includes(commodity):
+          item = new Food();
+          item.setGstPercentage(CLASS_CONSTANTS.GST_CAL.FOOD.GST_PERCENTAGE);
+          break;
+        case CLASS_CONSTANTS.GST_CAL.FURNITURE.COMMODITY.includes(commodity):
+          item = new Furniture();
+          item.setGstPercentage(CLASS_CONSTANTS.GST_CAL.FURNITURE.GST_PERCENTAGE);
+          break;
+        case CLASS_CONSTANTS.GST_CAL.ELECTRONICS.COMMODITY.includes(commodity):
+          item = new Electronics();
+          item.setGstPercentage(CLASS_CONSTANTS.GST_CAL.ELECTRONICS.GST_PERCENTAGE);
+          break;
+        case CLASS_CONSTANTS.GST_CAL.COSMETICS.COMMODITY.includes(commodity):
+          item = new Cosmetics();
+          item.setGstPercentage(CLASS_CONSTANTS.GST_CAL.COSMETICS.GST_PERCENTAGE);
+          break;
+        default:
+          return alert(`404: Commodity not found, Please ask your admin to add ${commodity.toLowerCase()} in the list.`);
       }
     }
+    item.setNameOfCommodity(commodity, unit, unitPrice);
+
   }
 
   render() {
