@@ -56,8 +56,16 @@ class GstCalculator extends Component {
           return alert(`404: Commodity not found, Please ask your admin to add ${commodity.toLowerCase()} in the list.`);
       }
     }
-    item.setNameOfCommodity(commodity, unit, unitPrice);
 
+    item.setNameOfCommodity(commodity, unit, unitPrice);
+    item.getGstAmount();
+    item.getTotalAmount();
+    let allDetails = item.getAllDetails();
+    console.log(allDetails);
+    this.setState({
+      currentCalculation: allDetails
+    });
+    this.props.addToCalculations(allDetails);
   }
 
   render() {
@@ -72,7 +80,7 @@ class GstCalculator extends Component {
         {this.state.currentCalculation ?
           <div>
             <span> GST Amount: {this.state.currentCalculation.gstAmount || 0}</span>
-            <span> Amount: {this.state.currentCalculation.amount || 0}</span>
+            <span> Amount: {this.state.currentCalculation.totalAmount || 0}</span>
           </div>
         : null}
       </div>

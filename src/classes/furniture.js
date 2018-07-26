@@ -1,5 +1,8 @@
-export class Furniture {
+import { Commodity } from "./commodity";
+
+export class Furniture extends Commodity {
   constructor() {
+    super();
     this.gstPercent = 5;
     this.category = 'Furniture';
     this.totalAmount = 0;
@@ -23,15 +26,15 @@ export class Furniture {
     return this.units * this.unitPrice;
   }
 
-  calculateGstAmount() {
+  getGstAmount() {
     return this.calculateGstAmount(this.gstPercent, this.getAmountOnWhichGstToBeCharged());
   }
 
-  calculateTotalAmount() {
+  getTotalAmount() {
     return this.calculateTotalAmount(this.gstAmount, this.getAmountOnWhichGstToBeCharged());
   }
 
-  showDetails() {
-    this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstAmount, this.totalAmount);
+  getAllDetails() {
+    return this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstAmount, this.totalAmount);
   }
 }

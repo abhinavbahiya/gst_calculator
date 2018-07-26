@@ -1,5 +1,8 @@
-export class Cosmetics {
+import { Commodity } from "./commodity";
+
+export class Cosmetics extends Commodity {
   constructor() {
+    super();
     this.gstPercent = 28;
     this.category = 'Cosmetics';
     this.gstAmount = 0;
@@ -23,15 +26,15 @@ export class Cosmetics {
     return this.units * this.unitPrice;
   }
 
-  calculateGstAmount() {
+  getGstAmount() {
     return this.calculateGstAmount(this.gstPercent, this.getAmountOnWhichGstToBeCharged());
   }
 
-  calculateTotalAmount() {
+  getTotalAmount() {
     return this.calculateTotalAmount(this.gstAmount, this.getAmountOnWhichGstToBeCharged());
   }
 
-  showDetails() {
-    this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstAmount, this.totalAmount);
+  getAllDetails() {
+    return this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstAmount, this.totalAmount);
   }
 }

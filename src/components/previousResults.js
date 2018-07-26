@@ -12,12 +12,12 @@ class PreviousResults extends Component {
     return this.props.oldCalculations.map((calculation, key) => {
       return (
         <tr key={key}>
-          <td>{calculation.category}</td>
-          <td>{calculation.commodity}</td>
-          <td>{calculation.unit}</td>
-          <td>{calculation.unitPrice}</td>
-          <td>{calculation.gstPercentage}</td>
-          <td>{calculation.amount}</td>
+          <td>{calculation && calculation.category}</td>
+          <td>{calculation && calculation.commodity}</td>
+          <td>{calculation && calculation.unit}</td>
+          <td>{calculation && calculation.unitPrice}</td>
+          <td>{calculation && calculation.gstPercentage}</td>
+          <td>{calculation && calculation.totalAmount}</td>
         </tr>
       )
     });

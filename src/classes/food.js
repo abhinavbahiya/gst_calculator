@@ -1,5 +1,8 @@
-export class Food {
+import { Commodity } from "./commodity";
+
+export class Food extends Commodity {
   constructor() {
+    super();
     this.gstPercent = 0;
     this.category = 'Food';
     this.gstAmount = 0;
@@ -23,18 +26,18 @@ export class Food {
     return this.units * this.unitPrice;
   }
 
-  calculateGstAmount() {
+  getGstAmount() {
     this.gstAmount = this.calculateGstAmount(this.gstPercent, this.getAmountOnWhichGstToBeCharged());
     return this.gstAmount;
   }
 
-  calculateTotalAmount() {
+  getTotalAmount() {
     this.totalAmount = this.calculateTotalAmount(this.gstAmount, this.getAmountOnWhichGstToBeCharged());
     return this.totalAmount;
   }
 
-  showDetails() {
-    this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstAmount, this.totalAmount);
+  getAllDetails() {
+    return this.showDetails(this.category, this.commodity, this.units, this.unitPrice, this.gstPercent, this.gstAmount, this.totalAmount);
   }
 }
 
